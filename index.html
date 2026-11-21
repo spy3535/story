@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>명리설화(命理說話) - 사주 물상과 대세운으로 빚어내는 인생 동화</title>
+<style>
+@import url('https://googleapis.com');
+
+:root {
+--bg-paper: #f7f3eb;
+--bg-card: #fffdf9;
+--ink-main: #2b241d;
+--ink-sub: #5c5043;
+--accent-gold: #b6862c;
+--accent-red: #9e2a2b;
+--accent-jade: #2d6a4f;
+--border-soft: #dfd5c5;
+--wood: #2d6a4f;
+--fire: #c1121f;
+--earth: #b07d2b;
+--metal: #5c677d;
+--water: #1d3557;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+background-color: var(--bg-paper);
+background-image: radial-gradient(#e6dec8 1px, transparent 1px);
+background-size: 20px 20px;
+color: var(--ink-main);
+font-family: 'Noto Sans KR', sans-serif;
+line-height: 1.75;
+padding: 24px 16px 80px;
+}
+
+.container { max-width: 920px; margin: 0 auto; }
+
+header {
+text-align: center;
+padding: 36px 20px;
+border-bottom: 2px solid var(--accent-gold);
+margin-bottom: 32px;
+}
+
+header .subtitle {
+font-family: 'Gowun Batang', serif;
+color: var(--accent-gold);
+font-size: 1rem;
+letter-spacing: 3px;
+margin-bottom: 8px;
+font-weight: 700;
+}
+
+header h1 {
+font-family: 'Gowun Batang', serif;
+font-size: 2.3rem;
+color: var(--ink-main);
+margin-bottom: 12px;
+}
+
+header p {
+color: var(--ink-sub);
+font-size: 0.96rem;
+max-width: 620px;
+margin: 0 auto;
+}
+
+.card {
+background: var(--bg-card);
+border: 1px solid var(--border-soft);
+border-radius: 14px;
+padding: 28px;
+box-shadow: 0 8px 24px rgba(43, 36, 29, 0.06);
+margin-bottom: 28px;
+}
+
+.form-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+gap: 18px;
+margin-bottom: 22px;
+}
+
+.form-group label {
+display: block;
+font-size: 0.88rem;
+font-weight: 700;
+color: var(--ink-sub);
+margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select {
+width: 100%;
+padding: 11px 13px;
+border: 1px solid #cbbda8;
+border-radius: 8px;
+background: #fff;
+font-size: 0.96rem;
+color: var(--ink-main);
+font-family: inherit;
+}
+
+.btn-submit {
+width: 100%;
+padding: 15px;
+background: linear-gradient(135deg, #3b2f24, #594533);
+color: #fdf8ee;
+border: 1px solid var(--accent-gold);
+border-radius: 10px;
+font-family: 'Gowun Batang', serif;
+font-size: 1.15rem;
+font-weight: 700;
+letter-spacing: 1px;
+cursor: pointer;
+}
+
+.btn-submit:hover {
+opacity: 0.94;
+}
+
+#resultSection { display: none; }
+
+.section-title {
+font-family: 'Gowun Batang', serif;
+font-size: 1.45rem;
+color: var(--ink-main);
+border-left: 4px solid var(--accent-gold);
+padding-left: 12px;
+margin-bottom: 18px;
+}
+
+.pillars-grid {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 12px;
+margin-bottom: 24px;
+text-align: center;
+}
+
+.pillar-box {
+border: 1px solid var(--border-soft);
+border-radius: 10px;
+padding: 14px 8px;
+background: #faf6ee;
+}
+
+.pillar-label { font-size: 0.82rem; color: var(--ink-sub); margin-bottom: 8px; font-weight: 600; }
+.pillar-sipsung-top { font-size: 0.82rem; color: var(--accent-red); font-weight: 700; margin-bottom: 4px; }
+.pillar-char { font-family: 'Gowun Batang', serif; font-size: 1.85rem; font-weight: 700; line-height: 1.25; margin: 4px 0; }
+.pillar-sipsung-bot { font-size: 0.82rem; color: var(--accent-jade); font-weight: 700; margin-top: 4px; }
+.pillar-animal { margin-top: 8px; font-size: 0.8rem; background: #efe7d6; padding: 3px 8px; border-radius: 12px; display: inline-block; }
+
+.el-wood { color: var(--wood); }
+.el-fire { color: var(--fire); }
+.el-earth { color: var(--earth); }
+.el-metal { color: var(--metal); }
+.el-water { color: var(--water); }
+
+.oheng-bars {
+display: grid;
+grid-template-columns: repeat(5, 1fr);
+gap: 10px;
+margin-bottom: 22px;
+}
+
+.oheng-item {
+background: #faf6ee;
+border: 1px solid var(--border-soft);
+border-radius: 8px;
+padding: 10px;
+text-align: center;
+}
+
+.oheng-bar-bg { height: 8px; background: #e5dccb; border-radius: 4px; overflow: hidden; margin: 6px 0; }
+.oheng-bar-fill { height: 100%; border-radius: 4px; }
+
+.mulsang-banner {
+background: linear-gradient(to right, #f5eedc, #fbf8f1);
+border: 1px solid #d8c6a5;
+border-radius: 10px;
+padding: 18px 20px;
+margin-bottom: 22px;
+}
+
+.mulsang-banner h3 { font-family: 'Gowun Batang', serif; font-size: 1.25rem; color: #4a3519; margin-bottom: 8px; }
+
+.daeun-timeline { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 8px; margin-bottom: 10px; }
+.daeun-step {
+min-width: 98px;
+background: #faf6ee;
+border: 1px solid var(--border-soft);
+border-radius: 8px;
+padding: 10px 8px;
+text-align: center;
+flex-shrink: 0;
+}
+.daeun-age { font-size: 0.78rem; color: var(--ink-sub); }
+.daeun-ganji { font-family: 'Gowun Batang', serif; font-size: 1.2rem; font-weight: 700; margin: 4px 0; }
+.daeun-tag { font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; background: #ebe2d0; }
+
+.story-header {
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between;
+align-items: center;
+gap: 12px;
+border-bottom: 1px solid var(--border-soft);
+padding-bottom: 16px;
+margin-bottom: 24px;
+}
+
+.char-counter {
+font-size: 0.88rem;
+background: #efe6d5;
+color: #4d3c28;
+padding: 6px 14px;
+border-radius: 20px;
+font-weight: 700;
+}
+
+.story-actions { display: flex; gap: 8px; }
+.btn-sub {
+padding: 8px 14px;
+border-radius: 6px;
+border: 1px solid #bba98e;
+background: #fff;
+color: var(--ink-main);
+font-size: 0.86rem;
+cursor: pointer;
+font-weight: 600;
+}
+
+.story-content {
+font-family: 'Gowun Batang', serif;
+font-size: 1.12rem;
+line-height: 2.05;
+color: #231d17;
+}
+
+.story-title-main {
+text-align: center;
+font-size: 1.75rem;
+font-weight: 700;
+color: #3a2713;
+margin: 10px 0 30px;
+padding-bottom: 16px;
+border-bottom: 1px double #cbbba0;
+}
+
+.chapter-title {
+font-size: 1.32rem;
+font-weight: 700;
+color: #7c4d12;
+margin: 38px 0 16px;
+padding-bottom: 6px;
+border-bottom: 1px dashed #d8c9b0;
+}
+
+.story-content p { margin-bottom: 18px; text-indent: 1em; word-break: keep-all; }
+
+.event-callout {
+background: #f9f4ea;
+border-left: 3px solid var(--accent-gold);
+padding: 14px 18px;
+margin: 22px 0;
+font-family: 'Noto Sans KR', sans-serif;
+font-size: 0.92rem;
+line-height: 1.65;
+color: #4a3f33;
+border-radius: 0 8px 8px 0;
+}
+
+@media print {
+body { background: #fff; padding: 0; }
+.no-print { display: none !important; }
+.card { box-shadow: none; border: none; padding: 0; }
+}
+
+@media (max-width: 600px) {
+.pillars-grid { grid-template-columns: repeat(2, 1fr); }
+.oheng-bars { grid-template-columns: repeat(2, 1fr); }
+header h1 { font-size: 1.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<header class="no-print">
+<div class="subtitle">命理說話 · 사주팔자 서사관</div>
+<h1>물상과 대세운으로 빚어내는 인생 동화</h1>
+<p>태어난 연·월·일·시와 성별을 입력하면 음양오행, 십성, 12지지 동물 물상과 대세운의 길흉을 해석하여 초년부터 말년까지 약 5,000자 분량의 한 편의 설화로 엮어드립니다.</p>
+</header>
+
+<section class="card no-print">
+<form id="sajuForm">
+<div class="form-grid">
+<div class="form-group">
+<label for="userName">주인공 이름 (호칭)</label>
+<input type="text" id="userName" placeholder="예: 서연, 도윤 (미입력 시 물상 이름)" maxlength="12" />
+</div>
+<div class="form-group">
+<label for="gender">성별 (대운 순역행 기준)</label>
+<select id="gender" required>
+<option value="M">남성 (乾命)</option>
+<option value="F">여성 (坤命)</option>
+</select>
+</div>
+<div class="form-group">
+<label for="birthDate">생년월일 (양력 기준)</label>
+<input type="date" id="birthDate" value="1995-05-15" min="1920-01-01" max="2035-12-31" required />
+</div>
+<div class="form-group">
+<label for="birthTime">태어난 시각 (12시진)</label>
+<select id="birthTime" required>
+<option value="0">자시 (23:30 ~ 01:29) · 쥐</option>
+<option value="1">축시 (01:30 ~ 03:29) · 소</option>
+<option value="2">인시 (03:30 ~ 05:29) · 호랑이</option>
+<option value="3">묘시 (05:30 ~ 07:29) · 토끼</option>
+<option value="4">진시 (07:30 ~ 09:29) · 용</option>
+<option value="5">사시 (09:30 ~ 11:29) · 뱀</option>
+<option value="6" selected>오시 (11:30 ~ 13:29) · 말</option>
+<option value="7">미시 (13:30 ~ 15:29) · 양</option>
+<option value="8">신시 (15:30 ~ 17:29) · 원숭이</option>
+<option value="9">유시 (17:30 ~ 19:29) · 닭</option>
+<option value="10">술시 (19:30 ~ 21:29) · 개</option>
+<option value="11">해시 (21:30 ~ 23:29) · 돼지</option>
+</select>
+</div>
+</div>
+<button type="submit" class="btn-submit">사주풀이 및 5,000자 인생 동화 엮어내기</button>
+</form>
+</section>
+
+<main id="resultSection">
+<section class="card">
+<h2 class="section-title">제1부. 타고난 사주 명식과 음양오행 물상</h2>
+
+const CHEONGAN = Array.of(
+{ hanja: '甲', kor: '갑', el: '목', yy: '양', color: '푸른', nature: '하늘을 향해 뻗어 오르는 거목(巨木)', trait: '곧은 기개와 개척 정신' },
+{ hanja: '乙', kor: '을', el: '목', yy: '음', color: '연초록', nature: '바람에도 꺾이지 않고 덩굴을 뻗는 화초(花草)', trait: '유연한 생명력과 적응력' },
+{ hanja: '丙', kor: '병', el: '화', yy: '양', color: '붉은', nature: '만물을 비추며 어둠을 걷어내는 태양(太陽)', trait: '화려한 열정과 공명정대함' },
+{ hanja: '丁', kor: '정', el: '화', yy: '음', color: '주홍빛', nature: '깊은 밤 길손의 마음을 녹이는 촛불과 별빛(燈燭)', trait: '섬세한 통찰과 헌신적인 온기' },
+{ hanja: '戊', kor: '무', el: '토', yy: '양', color: '황금빛', nature: '구름을 품고 우뚝 솟은 태산(泰山)과 넓은 대지', trait: '묵직한 포용력과 흔들리지 않는 신의' },
+{ hanja: '己', kor: '기', el: '토', yy: '음', color: '황토빛', nature: '씨앗을 품어 오곡백과를 길러내는 비옥한 전원(田園)', trait: '실속 있는 지혜와 다정한 양육' },
+{ hanja: '庚', kor: '경', el: '금', yy: '양', color: '하얀', nature: '단련을 거쳐 명검이 되는 거대한 무쇠와 바위(剛鐵)', trait: '결단력 있는 의리와 강직함' },
+{ hanja: '辛', kor: '신', el: '금', yy: '음', color: '은빛', nature: '달빛 아래 영롱하게 빛나는 보석과 서리(珠玉)', trait: '예리한 감수성과 고결한 자존심' },
+{ hanja: '壬', kor: '임', el: '수', yy: '양', color: '검푸른', nature: '모든 강물을 받아들이며 유유히 흐르는 큰 바다(大海)', trait: '거침없는 지혜와 스케일 큰 포부' },
+{ hanja: '癸', kor: '계', el: '수', yy: '음', color: '맑은', nature: '메마른 대지를 적시고 스며드는 단비와 이슬(雨露)', trait: '총명한 직관과 고요한 침투력' }
+);
+const JIJI = Array.of(
+{ hanja: '子', kor: '자', el: '수', yy: '양', animal: '쥐', mulsang: '깊은 밤 고요한 샘물가의 영민한 쥐' },
+{ hanja: '丑', kor: '축', el: '토', yy: '음', animal: '소', mulsang: '얼어붙은 땅을 묵묵히 갈아엎는 성실한 소' },
+{ hanja: '寅', kor: '인', el: '목', yy: '양', animal: '호랑이', mulsang: '봄기운이 움트는 깊은 산속의 포효하는 호랑이' },
+{ hanja: '卯', kor: '묘', el: '목', yy: '음', animal: '토끼', mulsang: '이슬 맺힌 풀밭을 뛰어노는 총명한 토끼' },
+{ hanja: '辰', kor: '진', el: '토', yy: '양', animal: '용', mulsang: '비구름을 머금고 승천을 준비하는 신비로운 용' },
+{ hanja: '巳', kor: '사', el: '화', yy: '음', animal: '뱀', mulsang: '따스한 햇살 아래 지혜를 품고 똬리를 튼 뱀' },
+{ hanja: '午', kor: '오', el: '화', yy: '양', animal: '말', mulsang: '드넓은 초원을 바람처럼 질주하는 백마' },
+{ hanja: '未', kor: '미', el: '토', yy: '음', animal: '양', mulsang: '여름 끝자락 언덕에서 풀을 뜯는 온화한 양' },
+{ hanja: '申', kor: '신', el: '금', yy: '양', animal: '원숭이', mulsang: '바위산을 민첩하게 누비며 열매를 따는 재주 많은 원숭이' },
+{ hanja: '酉', kor: '유', el: '금', yy: '음', animal: '닭', mulsang: '새벽을 깨우며 황금 깃털을 가다듬는 고고한 닭' },
+{ hanja: '戌', kor: '술', el: '토', yy: '양', animal: '개', mulsang: '노을 지는 성문을 든든히 지키는 충직한 개' },
+{ hanja: '亥', kor: '해', el: '수', yy: '음', animal: '돼지', mulsang: '깊은 숲속 맑은 계곡물을 마시는 복스러운 돼지' }
+);
+const SOLAR_TERMS_DAYS = Array.of(6, 4, 6, 5, 6, 6, 7, 8, 8, 8, 7, 7);
+const IN_MONTH_STEMS = Array.of(2, 4, 6, 8, 0);
+const JA_HOUR_STEMS = Array.of(0, 2, 4, 6, 8);
+function getSipsung(dayStemIdx, targetEl, targetYy) {
+const dayStem = CHEONGAN.at(dayStemIdx);
+const elOrder = Array.of('목', '화', '토', '금', '수');
+const diff = (elOrder.indexOf(targetEl) - elOrder.indexOf(dayStem.el) + 5) % 5;
+const sameYy = (dayStem.yy === targetYy);
+if (diff === 0) return sameYy ? '비견' : '겁재';
+if (diff === 1) return sameYy ? '식신' : '상관';
+if (diff === 2) return sameYy ? '편재' : '정재';
+if (diff === 3) return sameYy ? '편관' : '정관';
+if (diff === 4) return sameYy ? '편인' : '정인';
+return '비견';
+}
+const SIPSUNG_STORY = {
+'비견': { event: '스스로의 힘으로 길을 개척하고 뜻을 같이하는 벗을 만나는 일' },
+'겁재': { event: '치열한 경쟁 속에서 재물이나 명예를 두고 승부수를 던지는 일' },
+'식신': { event: '좋아하는 일에 깊이 몰두하여 의식주의 복록과 창작의 결실을 거두는 일' },
+'상관': { event: '낡은 관습에 맞서 새로운 판을 짜고 세상의 이목을 단숨에 사로잡는 일' },
+'편재': { event: '예상치 못한 큰 기회와 넓은 인맥을 통해 큰 재물과 무대를 거머쥐는 일' },
+'정재': { event: '꾸준한 노력과 신용을 바탕으로 흔들리지 않는 기반과 가정을 일구는 일' },
+'편관': { event: '무거운 책임과 시련을 정면으로 돌파하여 권위와 명예를 쟁취하는 일' },
+'정관': { event: '세상의 인정과 바른 질서 속에서 반듯한 지위와 명성을 얻는 일' },
+'편인': { event: '고독한 사색 끝에 남다른 철학, 예술, 혹은 비책을 깨우치는 일' },
+'정인': { event: '귀인의 도움과 깊은 배움을 통해 위기를 넘기고 지혜의 문서를 쥐는 일' }
+};
+function calculateSaju(dateStr, timeIdx, gender) {
+const parts = dateStr.split('-').map(Number);
+const y = parts.at(0);
+const m = parts.at(1);
+const d = parts.at(2);
+let sajuYear = y;
+if (m < 2 || (m === 2 && d < 4)) sajuYear -= 1;
+const yearStemIdx = ((sajuYear - 4) % 10 + 10) % 10;
+const yearBranchIdx = ((sajuYear - 4) % 12 + 12) % 12;
+const termDay = SOLAR_TERMS_DAYS.at(m - 1);
+let solarMonth = (d < termDay) ? (m === 1 ? 12 : m - 1) : m;
+const monthBranchIdx = solarMonth % 12;
+const inMonthStartStem = IN_MONTH_STEMS.at(yearStemIdx % 5);
+const monthStemIdx = (inMonthStartStem + (monthBranchIdx - 2 + 12) % 12) % 10;
+const baseUtc = Date.UTC(1900, 0, 1);
+const targetUtc = Date.UTC(y, m - 1, d);
+const diffDays = Math.floor((targetUtc - baseUtc) / 86400000);
+const dayStemIdx = ((0 + diffDays) % 10 + 10) % 10;
+const dayBranchIdx = ((10 + diffDays) % 12 + 12) % 12;
+const hourBranchIdx = Number(timeIdx);
+const jaHourStartStem = JA_HOUR_STEMS.at(dayStemIdx % 5);
+const hourStemIdx = (jaHourStartStem + hourBranchIdx) % 10;
+const pillars = Array.of(
+{ label: '시주(말년·자녀)', stem: hourStemIdx, branch: hourBranchIdx },
+{ label: '일주(나·배우자)', stem: dayStemIdx, branch: dayBranchIdx },
+{ label: '월주(청년·사회)', stem: monthStemIdx, branch: monthBranchIdx },
+{ label: '연주(초년·조상)', stem: yearStemIdx, branch: yearBranchIdx }
+);
+pillars.forEach((p, idx) => {
+const sObj = CHEONGAN.at(p.stem);
+const bObj = JIJI.at(p.branch);
+p.stemSipsung = (idx === 1) ? '일간(나)' : getSipsung(dayStemIdx, sObj.el, sObj.yy);
+p.branchSipsung = getSipsung(dayStemIdx, bObj.el, bObj.yy);
+});
+const ohengCount = { '목': 0, '화': 0, '토': 0, '금': 0, '수': 0 };
+pillars.forEach(p => {
+ohengCount[CHEONGAN.at(p.stem).el] += 1;
+ohengCount[JIJI.at(p.branch).el] += 1;
+});
+const isYangYear = (CHEONGAN.at(yearStemIdx).yy === '양');
+const isForward = (gender === 'M' && isYangYear) || (gender === 'F' && !isYangYear);
+const daeunStartAge = ((d * 3 + m) % 8) + 2;
+const daeunList = [];
+for (let i = 1; i <= 8; i++) {
+const step = isForward ? i : -i;
+const dStem = ((monthStemIdx + step) % 10 + 10) % 10;
+const dBranch = ((monthBranchIdx + step) % 12 + 12) % 12;
+const age = daeunStartAge + (i - 1) * 10;
+const sipsung = getSipsung(dayStemIdx, CHEONGAN.at(dStem).el, CHEONGAN.at(dStem).yy);
+daeunList.push({
+age,
+stem: dStem,
+branch: dBranch,
+sipsung,
+ganji: CHEONGAN.at(dStem).hanja + JIJI.at(dBranch).hanja,
+kor: CHEONGAN.at(dStem).kor + JIJI.at(dBranch).kor
+});
+}
+return { pillars, dayStemIdx, dayBranchIdx, ohengCount, isForward, daeunList };
+}
+function generateFairyTale(saju, customName) {
+const dayStem = CHEONGAN.at(saju.dayStemIdx);
+const dayBranch = JIJI.at(saju.dayBranchIdx);
+const hourPillar = saju.pillars.at(0);
+const dayPillar = saju.pillars.at(1);
+const monthPillar = saju.pillars.at(2);
+const yearPillar = saju.pillars.at(3);
+const yearBranch = JIJI.at(yearPillar.branch);
+const monthBranch = JIJI.at(monthPillar.branch);
+const hourBranch = JIJI.at(hourPillar.branch);
+const heroName = customName.trim() ? customName.trim() : ${dayStem.color} ${dayBranch.animal};
+const title = 《${dayStem.color} ${dayBranch.animal}의 여정: ${dayStem.hanja}${dayBranch.hanja}(${dayStem.kor}${dayBranch.kor}) 일주의 설화》;
+const sortedOheng = Object.entries(saju.ohengCount).sort((a, b) => b.at(1) - a.at(1));
+const strongEl = sortedOheng.at(0).at(0);
+const weakEl = sortedOheng.at(-1).at(0);
+const elDescMap = {
+'목': '푸른 숲의 생명력과 위로 뻗어나가는 기상(木)',
+'화': '타오르는 햇불의 열정과 세상을 밝히는 예지(火)',
+'토': '만물을 품어 기르는 대지의 신의와 중심(土)',
+'금': '바위를 깎아 보석을 만드는 결단과 의리(金)',
+'수': '깊은 골짜기를 흘러 바다로 향하는 지혜와 유연함(水)'
+};
+const yearSip = yearPillar.branchSipsung;
+const monthSip = monthPillar.branchSipsung;
+const daySip = dayPillar.branchSipsung;
+const hourSip = hourPillar.branchSipsung;
+const d1 = saju.daeunList.at(0);
+const d2 = saju.daeunList.at(1);
+const d3 = saju.daeunList.at(2);
+const d4 = saju.daeunList.at(3);
+const d5 = saju.daeunList.at(4);
+const d6 = saju.daeunList.at(5);
+const d7 = saju.daeunList.at(6);
+function getLuckNarrative(daeunObj) {
+const dEl = CHEONGAN.at(daeunObj.stem).el;
+const isHelp = (dEl === weakEl || dEl === dayStem.el);
+const sipInfo = SIPSUNG_STORY[daeunObj.sipsung];
+const animal = JIJI.at(daeunObj.branch).animal;
+const stemNature = CHEONGAN.at(daeunObj.stem).nature;
+if (isHelp) {
+return ${daeunObj.age}세 무렵 찾아온 '${daeunObj.kor}(${daeunObj.ganji}) 대운'은 메말랐던 땅에 단비가 내리듯 주인공에게 부족했던 ${elDescMap[dEl]}을 채워주는 귀한 순풍이었습니다. 이 시기 하늘에서는 ${stemNature}의 기운이 비추고 땅에서는 영리한 ${animal}의 발걸음이 길을 열어주었으니, 십성으로는 '${daeunObj.sipsung}'의 별이 빛나며 ${sipInfo.event}이 연이어 일어났습니다.;
+} else {
+return ${daeunObj.age}세 무렵 마주한 '${daeunObj.kor}(${daeunObj.ganji}) 대운'은 잔잔하던 호수에 거센 바람이 불어닥치는 시험의 계절이었습니다. ${stemNature}의 기운과 ${animal}의 기세가 한데 얽히며 '${daeunObj.sipsung}'의 과제를 던져주었기에, 한때는 예기치 못한 풍파와 선택의 갈림길 앞에서 밤잠을 설치는 날도 있었습니다. 그러나 쇠가 불길을 견뎌야 명검이 되듯, 이 시련을 피하지 않고 정면으로 마주한 덕분에 오히려 ${sipInfo.event}이라는 값진 전리품을 손에 쥐게 되었습니다.;
+}
+}
+const chapters = Array.of(
+{
+heading: 서막. 태몽의 계곡에서 깨어난 ${dayStem.color} ${dayBranch.animal},
+paragraphs: Array.of(
+아득한 옛날, 해와 달이 번갈아 비추고 다섯 가지 빛깔의 바람이 불어오는 '음양의 골짜기'에 한 아이가 태어났습니다. 아이가 세상에 첫울음을 터뜨리던 날, 동쪽 하늘에는 ${CHEONGAN.at(yearPillar.stem).nature}의 서기가 어렸고, 마을 어귀의 오래된 우물가에서는 지혜로운 ${yearBranch.animal} 한 마리가 나타나 아이의 탄생을 축복하며 세 번 울었습니다. 훗날 사람들이 '${heroName}'이라 부르게 될 이 주인공은 태어날 때부터 남다른 눈빛을 지니고 있었습니다.,
+하늘의 별자리를 읽는 노승이 아이의 사주팔자를 들여다보며 무릎을 쳤습니다. "허허, 이 아이의 본성은 곧 ${dayStem.nature}이니, 그 기개가 맑고도 깊구나. 게다가 몸을 싣고 달리는 수레는 ${dayBranch.mulsang}의 형상을 띠었으니, 한 번 마음을 먹으면 천 리 길도 마다하지 않고 제 운명을 빚어낼 상이로다!" 노승의 말처럼 주인공의 영혼 속에는 ${dayStem.trait}이 붉은 보석처럼 단단히 박혀 있었습니다.,
+아이의 마음속 풍경을 들여다보면 다섯 가지 오행의 정령들이 저마다의 소리를 내며 어우러져 있었습니다. 그중에서도 가장 기세가 드높은 것은 ${elDescMap[strongEl]}이었습니다. 덕분에 주인공은 어린 시절부터 또래들보다 생각이 깊고 한 번 집중하면 시간 가는 줄 모르는 남다른 몰입력을 보여주었습니다. 반면 조금은 여리고 보살핌이 필요했던 ${elDescMap[weakEl]}의 기운은, 훗날 인생의 굽이굽이마다 주인공이 겸손을 배우고 귀인을 알아보는 마음의 창이 되어주었습니다.,
+태어난 해의 기둥인 연주(年柱)에는 '${yearSip}'의 별이 자리 잡아 조상과 가문의 오랜 숨결을 전해주었고, 태어난 달의 기둥인 월주(月柱)에는 '${monthSip}'의 기운이 웅장하게 솟아 장차 세상이라는 넓은 무대에서 어떤 역할을 맡게 될지를 암시하고 있었습니다. 그렇게 ${heroName}의 인생이라는 긴 두루마리가 조용히 펼쳐지기 시작했습니다.
+)
+},
+{
+heading: 제1장. 초년운(初年運) — ${yearBranch.animal}의 숲에서 뿌리를 내리다,
+paragraphs: Array.of(
+어린 시절의 ${heroName}은(는) 마치 깊은 숲속에서 아침 이슬을 머금고 자라나는 어린 나무와 같았습니다. 초년의 터전을 상징하는 연주와 월주의 기운 속에서, 주인공은 ${yearBranch.mulsang}의 보살핌을 받으며 세상의 이치를 하나씩 익혀갔습니다. 남들이 무심코 지나치는 풀잎의 흔들림이나 바람의 방향에서도 남다른 의미를 읽어내는 아이였기에, 어른들은 종종 아이의 엉뚱하면서도 핵심을 찌르는 질문에 놀라곤 했습니다.,
+특히 초년기의 마음밭에는 '${yearSip}'과 '${monthSip}'의 기운이 교차하면서 일찍부터 철이 드는 계기가 마련되었습니다. 집안의 분위기나 주변 환경의 변화 속에서 주인공은 단순히 보호받기만을 기다리는 어린아이가 아니라, 스스로 작은 책임을 짊어지고 해결책을 찾아 나서는 법을 배웠습니다. ${d1.age}세에 첫 번째 대운인 '${d1.kor}(${d1.ganji})'의 문이 열리자, 어린 주인공의 세계는 마을 울타리를 넘어 더 넓은 배움의 들판으로 확장되었습니다.,
+열 살 남짓의 어느 봄날, 마을에 큰 가뭄이 들어 모두가 시름에 잠겼을 때의 일입니다. 아이들과 함께 뒷산에 올랐던 ${heroName}은(는) 바위틈에 젖어 있는 이끼와 그 주변을 맴도는 산새들의 움직임을 유심히 살폈습니다. 타고난 ${dayStem.trait}과 ${dayBranch.animal} 특유의 직감이 빛을 발하는 순간이었습니다. 아이가 가리킨 바위 아래를 어른들이 파 내려가자 맑고 차가운 석간수가 솟아올랐고, 그날 이후 마을 사람들은 주인공을 '작은 지혜의 샘'이라 부르며 아꼈습니다.,
+하지만 초년의 끝자락에 다다르면서 주인공의 가슴속에는 설명할 수 없는 갈증과 호기심이 싹트기 시작했습니다. 좁은 골짜기 안의 평온함만으로는 ${dayStem.nature}처럼 크고 넓은 본성을 다 채울 수 없었기 때문입니다. 청운의 꿈을 품은 ${heroName}은(는) 이제 어린 시절의 정든 숲을 뒤로하고, 비바람과 햇살이 공존하는 청년의 광야로 첫발을 내디딜 준비를 마쳤습니다.
+),
+callout: 【초년운 명리 핵심】 연지 '${yearBranch.kor}(${yearBranch.animal})'와 초년 대운 '${d1.kor}(${d1.sipsung})'의 영향으로, 일찍부터 자립심과 관찰력을 기르며 인생의 기초 체력과 학문적·정신적 뿌리를 단단히 내리는 시기입니다.
+},
+{
+heading: 제2장. 청년운(靑年運) — ${monthBranch.animal}의 광야를 달리는 청춘의 모험,
+paragraphs: Array.of(
+스무 살의 고개를 넘어서며 ${heroName}의 앞에는 ${monthBranch.mulsang}이 기지개를 켜는 드넓은 세상이 펼쳐졌습니다. 청년기를 주관하는 월주(月柱)는 사주에서 가장 역동적인 사회 활동과 야망을 뜻하는 자리입니다. 그곳에 깃든 '${monthSip}'의 별은 주인공에게 가만히 머물러 있지 말고 세상과 부딪혀 너만의 깃발을 꽂으라고 끊임없이 속삭였습니다.,
+${getLuckNarrative(d2)} 이 시기에 주인공은 평생의 가치관을 세워준 스승이나 인생의 방향을 바꾼 결정적인 인연을 만나게 되었습니다. 낯선 도시의 거친 바람 속에서도 ${dayStem.color} ${dayBranch.animal}의 기백은 꺾이지 않았습니다. 남들이 두려워하여 주저하는 일에도 주인공은 특유의 추진력으로 뛰어들었고, 실패하더라도 그 안에서 남들이 보지 못한 비책을 건져 올렸습니다.,
+청년기의 한복판, 세운(歲運)에서 거센 불길과 차가운 물줄기가 충돌하는 해가 찾아왔을 때 큰 사건이 하나 벌어졌습니다. 믿었던 동료와의 의견 충돌로 공들여 쌓아 올린 계획이 무산될 위기에 처한 것입니다. 밤하늘의 별빛마저 구름에 가려진 그 시절, ${heroName}은(는) 홀로 강가에 앉아 자신의 내면을 깊이 들여다보았습니다. 그때 배우자 궁이자 자신의 안식처인 일지(日支)에 자리한 '${daySip}'의 기운이 따뜻한 등불처럼 마음을 비추었습니다.,
+"내가 옳다는 고집을 잠시 내려놓고 상대의 마음을 품어준다면, 이 위기는 오히려 더 큰 판을 짜는 디딤돌이 되리라." 깨달음을 얻은 주인공은 자존심을 굽히고 먼저 손을 내밀었으며, 부족했던 세부 계획을 보완하여 다시 도전했습니다. 그 결과 전화위복의 기적이 일어나며 세상의 인정을 받기 시작했고, 이 무렵 곁을 지켜준 귀한 인연과 마음을 나누며 인생의 동반자적 기틀을 다지게 되었습니다.
+),
+callout: 【청년운 명리 핵심】 월지 '${monthBranch.kor}(${monthBranch.animal})'의 '${monthSip}' 기운이 발현되어 사회적 입지를 다집니다. ${d2.age}세·${d3.age}세 대운을 거치며 크고 작은 시행착오와 대인관계의 시험을 통과한 뒤 비로소 자신만의 전문성과 인연을 거머쥐게 됩니다.
+},
+{
+heading: 제3장. 중년운(中年運) — 대운의 격랑을 넘어 황금의 성을 쌓다,
+paragraphs: Array.of(
+세월이 흘러 인생의 정오(正午)인 중년에 이르자, ${heroName}의 눈빛은 청년 시절의 날카로움을 넘어 깊고 묵직한 위엄을 띠게 되었습니다. 이제 주인공은 한 사람의 모험가를 넘어 가족과 조직, 그리고 수많은 이들의 삶을 어깨에 짊어진 거목이자 산맥이 되어 있었습니다. 사주 원국의 일주 '${dayStem.hanja}${dayBranch.hanja}'가 본연의 빛을 가장 찬란하게 뿜어내는 황금기가 도래한 것입니다.,
+${getLuckNarrative(d4)} 특히 마흔을 전후한 몇 해 동안에는 하늘의 세운이 일주와 묘한 합(合)과 충(沖)을 동시에 일으키며 인생에서 가장 굵직한 전환점을 만들어냈습니다. 오래 몸담았던 터전을 떠나 새로운 사업을 일으키거나, 막중한 책임을 맡아 조직의 운명을 바꾸는 큰 결단을 내려야 했던 것입니다. 주변에서는 위험하다며 만류하는 목소리도 높았지만, 주인공의 가슴속에 살아 숨 쉬는 ${dayBranch.animal}의 직감은 지금이 바로 승부수를 던질 때임을 정확히 알고 있었습니다.,
+물론 모든 날이 순탄하기만 했던 것은 아닙니다. 중년의 후반부로 접어들며 찾아온 또 다른 세운의 파고 속에서, 한때는 재물의 흐름이 막히고 가까운 사람의 배신이나 건강의 적신호로 인해 깊은 시름에 잠기는 시기도 있었습니다. ${getLuckNarrative(d5)} 폭풍우가 몰아치던 그해 가을, 주인공은 욕심을 비우고 기본으로 돌아가는 지혜를 택했습니다. 무리하게 덩치를 키우기보다 내실을 다지고, 곁에 남은 진실한 사람들에게 덕을 베풀며 때를 기다린 것입니다.,
+하늘은 스스로 돕는 자를 외면하지 않았습니다. 비바람이 잦아든 이듬해 봄, 오랫동안 묵묵히 쌓아온 신용과 실력이 한꺼번에 빛을 발하며 큰 재물과 명예가 물밀듯이 밀려들어 왔습니다. 과거에 주인공이 조건 없이 베풀었던 작은 호의들이 거대한 은혜가 되어 돌아왔고, 마침내 ${heroName}은(는) 누구도 쉽게 흔들 수 없는 견고한 성취의 탑을 우뚝 세웠습니다.
+),
+callout: 【중년운 명리 핵심】 일주 '${dayStem.kor}${dayBranch.kor}'의 에너지가 최고조에 달하며, ${d4.age}세·${d5.age}세 대운의 변화 속에서 인생 최대의 성취와 책임이 함께 찾아옵니다. 과욕을 경계하고 덕을 쌓을 때 흉운은 비켜가고 대길(大吉)의 결실을 맺습니다.
+},
+{
+heading: 제4장. 말년운(晩年運) — ${hourBranch.animal}의 저녁노을 아래 지혜를 전하다,
+paragraphs: Array.of(
+인생의 해가 서쪽 하늘을 붉고 온화하게 물들이는 말년에 이르러, ${heroName}의 발걸음은 한결 여유롭고 평화로워졌습니다. 사주의 마지막 기둥인 시주(時柱)는 인생의 최종 결실이자 자손과 후대, 그리고 노년의 정신세계를 비추는 거울입니다. 주인공의 시주에는 ${hourBranch.mulsang}의 고요한 기품과 함께 '${hourSip}'의 별이 은은한 달빛처럼 빛나고 있었습니다.,
+${getLuckNarrative(d6)} 젊은 날 그토록 치열하게 쫓던 세속의 명예와 재물은 이제 마음을 넉넉하게 채우는 따뜻한 온돌방이 되었고, 주인공의 관심은 자연스레 삶의 본질과 후학 양성, 그리고 자연과의 조화로 옮겨갔습니다. ${dayStem.nature}처럼 한평생 비바람을 견디며 자라난 주인공의 곁에는 그 그늘을 찾아 모여드는 젊은이들과 자손들의 웃음소리가 끊이지 않았습니다.,
+말년의 어느 맑은 가을날, 세운에서 길한 기운이 시주와 반갑게 어우러지던 해에 주인공은 자신의 지나온 발자취를 한 권의 글과 이야기로 정리하여 세상에 남겼습니다. 젊은 날 겪었던 아픔조차 이제는 아름다운 무늬가 되어, 길을 잃고 헤매는 후배들에게 등대 같은 이정표가 되어주었습니다. 건강 또한 큰 굴곡 없이 평온을 유지하였으니, 이는 중년 이후 스스로 마음을 다스리고 순리에 순응하며 살아온 덕분이었습니다.,
+어느덧 ${d7.age}세를 넘어 은빛 달빛이 계곡을 가득 채우는 밤이 찾아왔습니다. ${heroName}은(는) 창밖의 밤하늘을 바라보며 잔잔한 미소를 지었습니다. 태어날 때의 ${dayStem.color} ${dayBranch.animal}이 이제는 천하의 이치를 통달한 신령한 존재가 되어, 자신이 걸어온 모든 길—기쁨과 눈물, 성공과 시련 그 어느 하나도 헛된 것이 없었음을 깨달았기 때문입니다. 그렇게 한 사람의 위대한 사주 설화는 영원히 빛나는 별이 되어 밤하늘에 새겨졌습니다.
+),
+callout: 【말년운 명리 핵심】 시지 '${hourBranch.kor}(${hourBranch.animal})'와 '${hourSip}'의 조화로 노년의 안정과 명예로운 마무리를 맞이합니다. 후대에게 지혜와 복록을 물려주며 정신적 풍요 속에서 평안한 여생을 누리는 결실의 시기입니다.
+}
+);
+let html = <h2 class="story-title-main">${title}</h2>;
+chapters.forEach(ch => {
+html += <h3 class="chapter-title">${ch.heading}</h3>;
+ch.paragraphs.forEach(p => { html += <p>${p}</p>; });
+if (ch.callout) html += <div class="event-callout">${ch.callout}</div>;
+});
+html += <h3 class="chapter-title">부록. 명리(命理)의 거울로 비춰본 개운(開運)의 비책</h3> <p>이 동화 속 주인공 ${heroName}의 일대기는 하늘이 부여한 여덟 글자의 설계도 위에 스스로의 의지와 선택이라는 붓으로 그려낸 한 폭의 산수화입니다. 사주 원국에서 가장 왕성했던 ${elDescMap[strongEl]}은 인생이라는 긴 항해에서 거친 파도를 뚫고 나아가는 강력한 돛이 되어주었으며, 상대적으로 여렸던 ${elDescMap[weakEl]}은 멈추어 숨을 고르고 타인의 아픔에 귀 기울이게 만드는 지혜의 닻이 되어주었습니다.</p> <p>특히 인생의 길흉화복이 교차하는 대운과 세운의 갈림길마다 주인공을 지켜준 가장 큰 힘은 바로 일지 '${dayBranch.kor}(${dayBranch.animal})'에 깃든 본연의 선한 마음과 흔들리지 않는 자기 신뢰였습니다. 운명이란 정해진 감옥이 아니라 계절의 변화와 같아서, 겨울이 오면 따뜻한 옷을 껴입고 봄이 오면 부지런히 씨앗을 뿌리는 자에게는 그 어떤 흉운도 결국 더 큰 성장을 위한 밑거름이 될 뿐입니다. 오늘 이 이야기를 마주한 당신의 삶 또한, 타고난 물상의 빛깔처럼 찬란하고 깊게 피어나기를 기원합니다.</p>;
+return html;
+}
+const elClassMap = { '목': 'el-wood', '화': 'el-fire', '토': 'el-earth', '금': 'el-metal', '수': 'el-water' };
+const elBgMap = { '목': '#2d6a4f', '화': '#c1121f', '토': '#b07d2b', '금': '#5c677d', '수': '#1d3557' };
+document.getElementById('sajuForm').addEventListener('submit', function(e) {
+e.preventDefault();
+const userName = document.getElementById('userName').value;
+const gender = document.getElementById('gender').value;
+const birthDate = document.getElementById('birthDate').value;
+const birthTime = document.getElementById('birthTime').value;
+const saju = calculateSaju(birthDate, birthTime, gender);
+document.getElementById('pillarsContainer').innerHTML = saju.pillars.map(p => {
+const s = CHEONGAN.at(p.stem);
+const b = JIJI.at(p.branch);
+return <div class="pillar-box"> <div class="pillar-label">${p.label}</div> <div class="pillar-sipsung-top">${p.stemSipsung}</div> <div class="pillar-char ${elClassMap[s.el]}">${s.hanja}<span style="font-size:0.9rem;">(${s.kor})</span></div> <div class="pillar-char ${elClassMap[b.el]}">${b.hanja}<span style="font-size:0.9rem;">(${b.kor})</span></div> <div class="pillar-sipsung-bot">${p.branchSipsung}</div> <div class="pillar-animal">${b.animal} · ${s.el}/${b.el}</div> </div>;
+}).join('');
+document.getElementById('ohengContainer').innerHTML = Array.of('목', '화', '토', '금', '수').map(el => {
+const cnt = saju.ohengCount[el];
+const pct = Math.min(100, Math.round((cnt / 8) * 100));
+return <div class="oheng-item"> <strong class="${elClassMap[el]}">${el} (${cnt}개)</strong> <div class="oheng-bar-bg"> <div class="oheng-bar-fill" style="width:${pct}%; background:${elBgMap[el]};"></div> </div> <span style="font-size:0.78rem; color:#665a4c;">${cnt === 0 ? '보완 필요' : cnt >= 3 ? '기운 왕성' : '조화 균형'}</span> </div>;
+}).join('');
+const dayStem = CHEONGAN.at(saju.dayStemIdx);
+const dayBranch = JIJI.at(saju.dayBranchIdx);
+document.getElementById('mulsangSummary').innerHTML = <h3>핵심 일주 물상: ${dayStem.hanja}${dayBranch.hanja}(${dayStem.kor}${dayBranch.kor}) — 「${dayStem.color} ${dayBranch.animal}」</h3> <p style="font-size:0.95rem; color:#42372b; line-height:1.7;"> 당신의 본원(일간)은 <strong>${dayStem.nature}</strong>을 상징하며, 삶의 터전(일지)은 <strong>${dayBranch.mulsang}</strong>의 형상을 지니고 있습니다. 타고난 성품은 <strong>${dayStem.trait}</strong>이 돋보이며, 대운의 흐름은 <strong>${saju.isForward ? '순행(順行 · 미래지향적 확장)' : '역행(逆行 · 내면적 성숙과 깊이)'}</strong>으로 전개됩니다. </p>;
+document.getElementById('daeunContainer').innerHTML = saju.daeunList.map(d => {
+const s = CHEONGAN.at(d.stem);
+const b = JIJI.at(d.branch);
+return <div class="daeun-step"> <div class="daeun-age">${d.age}세 ~ ${d.age + 9}세</div> <div class="daeun-ganji"> <span class="${elClassMap[s.el]}">${s.hanja}</span><span class="${elClassMap[b.el]}">${b.hanja}</span> </div> <div style="font-size:0.78rem; margin-bottom:4px;">${d.kor} (${b.animal})</div> <span class="daeun-tag">${d.sipsung}</span> </div>;
+}).join('');
+const storyOutput = document.getElementById('storyOutput');
+storyOutput.innerHTML = generateFairyTale(saju, userName);
+const charCount = storyOutput.innerText.trim().length;
+document.getElementById('charCountDisplay').textContent = 동화 분량: 약 ${charCount.toLocaleString()}자 (공백 포함);
+document.getElementById('resultSection').style.display = 'block';
+document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+});
+function copyStory() {
+navigator.clipboard.writeText(document.getElementById('storyOutput').innerText).then(() => {
+alert('동화 전문이 클립보드에 복사되었습니다.');
+});
+}
+function downloadTxt() {
+const blob = new Blob(Array.of(document.getElementById('storyOutput').innerText), { type: 'text/plain;charset=utf-8' });
+const link = document.createElement('a');
+link.href = URL.createObjectURL(blob);
+link.download = '사주_인생동화.txt';
+link.click();
+}
+
+</html>
